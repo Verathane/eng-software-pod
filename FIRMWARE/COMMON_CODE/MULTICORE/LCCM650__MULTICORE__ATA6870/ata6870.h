@@ -36,7 +36,7 @@
 		#define C_ATA6870__ADC_RES_V				(0.0015F)
 
 		//** Voltage thresholds for each module, CHANGE IF NEEDED*/
-		#define C_ATA6870_MIN_VOLTS					(3.0)
+		#define C_ATA6870_MIN_VOLTS					(3.5)
 		#define C_ATA6870_MAX_VOLTS					(4.3)
 
 		/** Balancer Stats */
@@ -59,6 +59,8 @@
 			ATA6870_STATE__WAIT_CONVERSION,
 			ATA6870_STATE__READ_CELL_VOLTAGES,
 			ATA6870_STATE__INTERRUPT,
+			ATA6870_STATE__DISCHARGE,
+			
 		}E_ATA6870_STATE_T;
 
 

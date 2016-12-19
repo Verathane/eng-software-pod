@@ -112,7 +112,7 @@ ATA6870N - BATTERY MANAGEMENT DEVICE
 		#define C_LOCALDEF__LCCM650__USE_ON_RM4								(1U)
 
 		/** number of devices in series */
-		#define C_LOCALDEF__LCCM650__NUM_DEVICES							(3U)
+		#define C_LOCALDEF__LCCM650__NUM_DEVICES							(1U)
 		#define C_LOCALDEF__LCCM650__NUM_6P_MODULES							(C_LOCALDEF__LCCM650__NUM_DEVICES * C_ATA6870__MAX_CELLS)
 
 		/** Use checksum support on the ATA comms or not? */
@@ -278,7 +278,7 @@ RLOOP - POWER NODE CORE
 		#define C_LOCALDEF__LCCM653__ENABLE_BATT_TEMP						(0U)
 
 		/** Enable the BMS Subsystem */
-		#define C_LOCALDEF__LCCM653__ENABLE_BMS								(0U)
+		#define C_LOCALDEF__LCCM653__ENABLE_BMS								(1U)
 
 		/** Enable the PV temp system using TSYS01 */
 		#define C_LOCALDEF__LCCM653__ENABLE_NODE_TEMP						(0U)

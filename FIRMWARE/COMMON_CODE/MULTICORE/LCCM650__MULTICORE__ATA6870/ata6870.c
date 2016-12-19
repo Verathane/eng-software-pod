@@ -301,6 +301,9 @@ Luint8 uATA6870__u8VoltageError(Lfloat32 *pf32Voltages)
 	}
 	return u8VoltageError;
 }
+
+
+
 /***************************************************************************//**
  * @brief
  * 10ms ISR

@@ -28,6 +28,8 @@
 //main structure
 extern struct _str6870 sATA6870;
 
+
+
 /***************************************************************************//**
  * @brief
  * Init any balancer systems
@@ -43,18 +45,6 @@ void vATA6870_BALANCE__Init(void)
 
 }
 
-/***************************************************************************//**
- * @brief
- * Start the balancing process.
- * 
- * @st_funcMD5		0003B1996E14215C56A9FFF33E5D0590
- * @st_funcID		LCCM650R0.FILE.012.FUNC.002
- */
-void vATA6870_BALANCE__Start(void)
-{
-	
-}
-
 
 /***************************************************************************//**
  * @brief
@@ -65,7 +55,12 @@ void vATA6870_BALANCE__Start(void)
  */
 void vATA6870_BALANCE__Stop(void)
 {
-
+	Luint8 u8DeviceCounter;
+	// for each ATA6870 device
+	for(u8DeviceCounter = 0U; u8DeviceCounter < C_LOCALDEF__LCCM650__NUM_DEVICES; u8DeviceCounter++)
+	{
+		vATA6870_RES__TurnAllOff(u8DeviceCounter);
+	}
 }
 
 /***************************************************************************//**
@@ -95,8 +90,8 @@ void vATA6870_BALANCE__Process(void)
 
 	switch(sATA6870.sBalance.eState)
 	{
-
 		case BALANCE_STATE__IDLE:
+			vATA6870_BALANCE__Start();
 			//do nothing.
 			break;
 
@@ -104,6 +99,36 @@ void vATA6870_BALANCE__Process(void)
 
 }
 
+/***************************************************************************//**
+ * @brief
+ * Start the balancing process.
+ *
+ * @st_funcMD5		0003B1996E14215C56A9FFF33E5D0590
+ * @st_funcID		LCCM650R0.FILE.012.FUNC.002
+ */
+void vATA6870_BALANCE__Start(void)
+{
+	Luint8 u8DeviceCounter;
+	Luint8 u8CellCounter;
+	// for each ATA6870 device
+	for(u8DeviceCounter = 0U; u8DeviceCounter < C_LOCALDEF__LCCM650__NUM_DEVICES; u8DeviceCounter++)
+	{
+		// for each 6P module connected to that device
+		for(u8CellCounter = 0U; u8CellCounter < C_ATA6870__MAX_CELLS; u8CellCounter++)
+		{
+			if (sATA6870.f32Voltage[u8CellCounter] <= 3.5 ) //todo: replace 3.5 with current minimum cell voltage
+				{
+					// cell has reached the setpoint, turn off discharge
+					vATA6870_RES__TurnOff(u8DeviceCounter, u8CellCounter);
+				}
+				else
+				{
+					// cell needs to discharge to reach voltage setpoint
+					vATA6870_RES__TurnOn(u8DeviceCounter, u8CellCounter);
+				}
+		}
+	}
+}
 
 //safetys
 #ifndef C_LOCALDEF__LCCM650__ENABLE_CRC
